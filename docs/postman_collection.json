@@ -1,0 +1,101 @@
+{
+  "info": {
+    "name": "Commerce Backend Assessment",
+    "description": "API collection for the commerce backend take-home",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://127.0.0.1:8001"
+    },
+    {
+      "key": "productId",
+      "value": "1"
+    },
+    {
+      "key": "orderId",
+      "value": "ORD1001"
+    },
+    {
+      "key": "promoPrice",
+      "value": "7299"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/health"
+      }
+    },
+    {
+      "name": "Create Product",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Running Shoes\",\n  \"mrp\": 9999,\n  \"selling_price\": 7499,\n  \"minimum_price\": 6800,\n  \"stock\": 10,\n  \"gst_rate\": 18\n}"
+        },
+        "url": "{{baseUrl}}/products"
+      }
+    },
+    {
+      "name": "Generate Promotional Price",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": "{{baseUrl}}/products/{{productId}}/price"
+      }
+    },
+    {
+      "name": "Create Order",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"product_id\": \"{{productId}}\",\n  \"quantity\": 1,\n  \"promotional_price\": {{promoPrice}}\n}"
+        },
+        "url": "{{baseUrl}}/orders"
+      }
+    },
+    {
+      "name": "Get Order",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/orders/{{orderId}}"
+      }
+    },
+    {
+      "name": "Pay Order",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": "{{baseUrl}}/orders/{{orderId}}/pay"
+      }
+    },
+    {
+      "name": "Get Settlement",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/orders/{{orderId}}/settlement"
+      }
+    }
+  ]
+}
